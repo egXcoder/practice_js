@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <p>Hello world vuejs </p>
+    <div id="app">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+    <script>
+        new Vue({
+            el : '#app',
+            async beforeCreate(e) {
+                await Promise.resolve(()=>{setTimeout(()=>2)});
+                console.log("before Create");
+            },
+            created(){
+                console.log( "created");
+            },
+            mounted(){
+                console.log("mounted");
+            }
+        })
+    </script>
+</body>
+</html>

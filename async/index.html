@@ -11,7 +11,7 @@
         <pre>
     Async Keyword has two properties
     1. you can't depend on it to return concrete value, it will always return promise
-    2. it allows inside it the await keyword which can be used to force the function to finish the promise first
+    2. it allows inside it the await keyword, which can be used to force the function to finish the promise first
         and also it gets concrete value from promise
         </pre>
     </code>
@@ -20,48 +20,53 @@
     <p id="output">Output</p>
 
     <script>        
-        function isAsyncKeywordTriggerNewThread(){
-            //this called as procedure call the async keyword has no affect on calculations at all
-            doHeavyLoop();
-            for(let i=0;i<10;i++){
-                console.log("hello world");
-            }
+        //canIDependOnAsyncFunctionToReturnConcreteValue
+        function runTest(){
+            let a = returnTestValue(); //a=promise fullfilled
+            console.log(a*2); //NAN
         }
 
-        async function doHeavyLoop(){
-            for(let i=0;i<1000000;i++){
-                console.log("do Heavy Loop");
-            }
+        async function returnTestValue(){
+            return 2;
         }
 
-        async function checkBenefitOfAwaitKeyword() {
+
+
+        //checkBenefitOfAwaitKeyword
+        function checkBenefitOfAwaitKeyword() {
             console.log('calling');
-            
             //the main benefit of async keyword is that it allows await keyword..
-            //await is going to force this context to wait untill promise is fullfilled and all its handlers are executed
-            //typically, you can't reach the resolved value from promise, but with await 
-            //you can extract the final value to the main context
-            const result = await resolveAfter2Seconds(); 
-
-            console.log("resolved from the main method");
-
-            console.log(result); //resolved
+            //await is going to force the hook function to wait untill promise is fullfilled,
+            //and only after then hook is going to continue execution
+            //but yet that doesn't block hook2 from being executed as well as the final console.log
+            //and after js finish it work it will go back to the a promise and to the hook and will continue hook execution 
+            
+            let a = hook(); // a=pending promise
+            hook2();
+            console.log("runTest Finished His work");
         }
 
-        function resolveAfter2Seconds() {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    console.log("resolved from resolveAfter2Seconds");
-                    resolve('resolved');
-                }, 2000);
-            });
+        async function hook(){
+            await Promise.resolve(() => { return 2; }); //hook function will pause here and it will allow the main context to continue
+            console.log("hook called"); //this will continue after the main context has finished its work,
+            // and now browser can spare some time to finish this part
         }
+
+        function hook2(){
+            console.log("hook2 called");
+        }
+
+
+
+
+        
 
         //another behavior of async keyword that it return a promise not a concrete value
-        function runTest() {
+        function AsyncFunctionReturnPromise() {
             console.log(asyncFunction()); // Promise
 
             asyncFunction().then((value)=>{
+                //this handler is called after javascript finish its work totally with the screen
                 console.log(value+1);
                 return value+1;
             })
@@ -69,6 +74,7 @@
 
         async function asyncFunction(){
             //async function automatically return a promise which can be used to chain with other handler
+            //async keyword has no effect on the flow, this block is going to be called normally as a procedure call
             console.log('calling');
             return 1;
         }

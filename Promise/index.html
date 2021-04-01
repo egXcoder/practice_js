@@ -7,32 +7,88 @@
     <title>Document</title>
 </head>
 
-<body>
+<body>  
+    <code>
+        <pre>
+    Promise is just a wrapper around calculating value through sequence of callbacks,
+    its not really creating new thread on its own because its using the main thread        
+        </pre>
+    </code>
 
+    
+    <p>To Practice any of the functions .. rename function name to runTest and click on the button</p>
     <button onclick="runTest()">Click Me To Test</button>
     <p id="output">Output</p>
+
     <script>
-
-        function runTest(){
-            const promise1 = new Promise((resolve, reject) => {
-                for (let i = 0; i < 100; i++) {
-                    console.log("promise initialize task is called"); //called first
+        function checkIfPromiseExecuteItsInstructionOnSameThread(){
+            //creating a new promise, is going to run the nested task on same thread right now
+            const myPromise = new Promise((resolve, reject) => {
+                let sum = 0;
+                for(let i=0;i<10000000000000;i++){
+                    sum+=i;
                 }
-                resolve(1);
+                resolve(sum);
+            });
+            //everything hangs
+        }
+
+        function checkIfYouCanReachPromiseInternalStateFromMainThread(){
+            //creating a new promise, sum is going to be fullfilled before we get the line of console.log
+            const myPromise = new Promise((resolve, reject) => {
+                let sum = 0;
+                for (let i = 0; i < 10; i++) {
+                    sum += i;
+                }
+                resolve(sum);
             });
 
-            promise1.then((value)=>{
-                let calcValue = 0;
-                for(let i=value;i<1000000000;i++){
-                    console.log("calculating"); //called third on main thread after main thread gets empty,its on main thread because ui is hanged
-                    calcValue+=i;
-                }
-                return calcValue;
+            console.log(myPromise); //by logging it you can see its fullfilled and value = 45
+            //there is no way to get the promise internal state from here,
+            //not status and not the value, there is NOTHING like myPromise.value or myPromise.status
+            //the best you can do is logging
+        }
+
+        function checkWhatWillHappenToMainThreadIfPromiseIsRejected() {
+            //creating a new promise, sum is going to be fullfilled before we get the line of console.log
+            const myPromise = new Promise((resolve, reject) => {
+                console.log(resolve); //this is a function
+                console.log(reject); //this is a function
+                
+                //it means promise has failed with his task,and it is going to throw exception on the promise context
+                //this exception won't affect the main thread operations
+                reject('error has occured during calculation'); 
+                resolve(sum);//it means promise has successeded with his task and return sum
             });
 
-            for (let i = 0; i < 100; i++) {
-                console.log("hello world"); //called second
-            }
+            console.log("hello world"); //still printing hello world even when promise throws exception
+        }
+
+        function checkWhatWillHappenToMainThreadIfPromiseIsRejected() {
+            //creating a new promise, sum is going to be fullfilled before we get the line of console.log
+            const myPromise = new Promise((resolve, reject) => {
+                console.log(resolve); //this is a function
+                console.log(reject); //this is a function
+                
+                //it means promise has failed with his task,and it is going to throw exception on the promise context
+                //this exception won't affect the main thread operations
+                reject('error has occured during calculation'); 
+                resolve(sum);//it means promise has successeded with his task and return sum
+            });
+
+            console.log("hello world"); //still printing hello world even when promise throws exception
+        }
+
+        function differenceBetweenLazyEvaluationAndPromise(){
+            let sum = () => 1+1; //Lazy Evaluation,we will defer the evaluation of sum later on the code
+            console.log(sum); //sum is just a function, not executed
+            console.log(sum()); //we are ready to calculate sum now and this will give us = 2
+
+
+            //this is NOT lazy evalutation, the task inside promise is going to run right now 
+            new Promise((resolve,reject)=>{
+                resolve(1+1);
+            })
         }
 
         function chainingHandlersOnPromise(){
@@ -54,74 +110,97 @@
                 .catch(err => { console.log(err) });
         }
 
-        function differenceBetweenLazyEvaluationAndPromise(){
-            let sum = () => 1+1; //Lazy Evaluation,we will defer the evaluation of sum later on the code
-            console.log(sum); //sum is just a function, not executed
-            console.log(sum()); //we are ready to calculate sum now and this will give us = 2
-
-
-            //this is NOT lazy evalutation, the task inside promise is going to run right now 
-            new Promise((resolve,reject)=>{
-                resolve(1+1);
-            })
-        }
-
-        function checkWhatWillHappenToMainThreadIfPromiseIsRejected() {
-            //creating a new promise, sum is going to be fullfilled before we get the line of console.log
-            const myPromise = new Promise((resolve, reject) => {
-                console.log(resolve); //this is a function
-                console.log(reject); //this is a function
-                
-                //it means promise has failed with his task,and it is going to throw exception on the promise context
-                //this exception won't affect the main thread operations
-                reject('error has occured during calculation'); 
-                resolve(sum);//it means promise has successeded with his task and return sum
-            });
-
-            console.log("hello world"); //still printing hello world even when promise throws exception
-        }
-
-        function checkWhatWillHappenToMainThreadIfPromiseIsRejected() {
-            //creating a new promise, sum is going to be fullfilled before we get the line of console.log
-            const myPromise = new Promise((resolve, reject) => {
-                console.log(resolve); //this is a function
-                console.log(reject); //this is a function
-                
-                //it means promise has failed with his task,and it is going to throw exception on the promise context
-                //this exception won't affect the main thread operations
-                reject('error has occured during calculation'); 
-                resolve(sum);//it means promise has successeded with his task and return sum
-            });
-
-            console.log("hello world"); //still printing hello world even when promise throws exception
-        }
-
-        function checkIfYouCanReachPromiseInternalStateFromMainThread(){
-            //creating a new promise, sum is going to be fullfilled before we get the line of console.log
-            const myPromise = new Promise((resolve, reject) => {
-                let sum = 0;
-                for (let i = 0; i < 10; i++) {
-                    sum += i;
+        function checkInWhichThreadIsTheCallbackIsExecuted(){
+            const promise1 = new Promise((resolve, reject) => {
+                for (let i = 0; i < 100; i++) {
+                    console.log("promise initialize task is called"); //called first
                 }
-                resolve(sum);
+                resolve(1);
             });
 
-            console.log(myPromise); //by logging it you can see its fullfilled and value = 45
-            //there is no way to get the promise internal state from here,
-            //not status and not the value, there is NOTHING like myPromise.value or myPromise.status
-            //the best you can do is logging
+            promise1.then((value)=>{
+                let calcValue = 0;
+                for(let i=value;i<1000000000;i++){
+                    console.log("calculating"); //called third on main thread after main thread gets empty,its on main thread because ui is hanged
+                    calcValue+=i;
+                }
+                return calcValue;
+            });
+
+            for (let i = 0; i < 100; i++) {
+                console.log("hello world"); //called second
+            }
         }
 
-        function checkIfPromiseExecuteItsInstructionOnSameThread(){
-            //creating a new promise, is going to run the nested task on same thread right now
-            const myPromise = new Promise((resolve, reject) => {
-                let sum = 0;
-                for(let i=0;i<10000000000000;i++){
-                    sum+=i;
-                }
-                resolve(sum);
+        //Promise.all ... attach handler after all promises are resolved successully
+        //Promise.allSettled ... attach handler after all promises are settled
+        function investigatePromiseAllMethod(){
+            let promise1 = new Promise((resolve,reject)=>{
+                //1. execute this block
+                setTimeout(()=>{
+                    console.log('p1');
+                    resolve('p1');
+                });
             });
-            //everything hangs
+
+            let promise2 = new Promise((resolve, reject) => {
+                //2. execute this block
+                setTimeout(() => {
+                    console.log('p2'); 
+                    resolve('p2');
+                },5000);
+            });
+
+            let promise3 = new Promise((resolve, reject) => {
+                //3. execute this block
+                setTimeout(() => {
+                    console.log('p3'); 
+                    reject('p3');
+                 },10000);
+            });
+
+            //attach handler after promise1 and promise2 are fullfilled successfully
+            Promise.all([promise1,promise2])
+                .then((values)=>{
+                    //execute this block only after p1 and p2 finish successfully and main thread is empty 
+                    console.log(values); //values is ['p1','p2']
+                });
+
+            //attach handler after promise1 and promise2 and promise3 are fullfilled successfully
+            //which doesn't happen because promise3 is rejected
+            Promise.all([promise1,promise2,promise3])
+                .then((values)=>{
+                    //never get called
+                    console.log(values);
+                });
+
+            console.log("called from main"); //execute this block before and promise handers are called
+        }
+
+        //Promise.any ... attach handler as soon as one the quickest promise resolve successfully
+        //promise.race ... attach handler as soon as the quickest promise finish either success or reject
+        function investigatePromiseAnyMethod(){
+            let promise1 = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log('p1');
+                    resolve('p1');
+                });
+            });
+
+            let promise2 = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log('p2');
+                    resolve('p2');
+                }, 5000);
+            });
+
+            //attach handler as soon as promise1 or promise 2 resolve successfully
+            Promise.any([promise1, promise2])
+                .then((values) => {
+                    console.log(values);
+                });
+
+            console.log("called from main");
         }
 
 

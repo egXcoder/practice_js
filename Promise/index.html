@@ -10,6 +10,16 @@
 <body>  
     <code>
         <pre>
+    Promises has nothing to do with threading, its just a mechanism to organize the async task
+    with chain of handlers. and it favourite non-blocking, what i mean by that: 
+    - Promise at first will try to achieve its task procedurly
+    - If promise find itself awaiting IO operation like fetch from file or fetch from internet or even awaiting
+        another promise, its going to initialize this line and will tell the main context that it promise to get 
+        to this part later, and main continue will continue its work.
+    - After main context finish all its work, main will get back to the promise it made and continue with its operations
+    after the await keyword if anything left there then it will call the promise handlers.
+     
+
     Promise is just a wrapper around calculating value through sequence of callbacks,
     its not really creating new thread on its own because its using the main thread        
         </pre>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>To Practice any of the functions .. rename function name to runTest and click on the button</p>
+    <button onclick="runTest()">Click Me To Test</button>
+    <p id="output">Output</p>
+
+    <script>        
+        function isAsyncKeywordTriggerNewThread(){
+            //this called as procedure call the async keyword has no affect on calculations at all
+            doHeavyLoop();
+            for(let i=0;i<10;i++){
+                console.log("hello world");
+            }
+        }
+
+        async function doHeavyLoop(){
+            for(let i=0;i<1000000;i++){
+                console.log("do Heavy Loop");
+            }
+        }
+
+        async function checkBenefitOfAwaitKeyword() {
+            console.log('calling');
+            
+            //the main benefit of async keyword is that it allows await keyword..
+            //await is going to force this context to wait untill promise is fullfilled and all its handlers are executed
+            //typically, you can't reach the resolved value from promise, but with await 
+            //you can extract the final value to the main context
+            const result = await resolveAfter2Seconds(); 
+
+            console.log("resolved from the main method");
+
+            console.log(result); //resolved
+        }
+
+        function resolveAfter2Seconds() {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    console.log("resolved from resolveAfter2Seconds");
+                    resolve('resolved');
+                }, 2000);
+            });
+        }
+
+        //another behavior of async keyword that it return a promise not a concrete value
+        function runTest() {
+            console.log(asyncFunction()); // Promise
+
+            asyncFunction().then((value)=>{
+                console.log(value+1);
+                return value+1;
+            })
+        }
+
+        async function asyncFunction(){
+            //async function automatically return a promise which can be used to chain with other handler
+            console.log('calling');
+            return 1;
+        }
+
+    </script>
+</body>
+</html>

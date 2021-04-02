@@ -12,19 +12,42 @@
     <div id="app">
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 
     <script>
         new Vue({
             el : '#app',
-            async beforeCreate(e) {
-                await Promise.resolve(()=>{setTimeout(()=>2)});
-                console.log("before Create");
+            beforeCreate(e) {
+                console.log("beforeCreate1"); //called 1
+                
+                axios.get('http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json')
+                .then((response)=>{
+                    //handler will be called after the script finish its working completely
+                    console.log(response);
+                });
+                
+                console.log("beforeCreate2"); //called 2
             },
-            created(){
-                console.log( "created");
+            async created(){
+                console.log("create1"); //called 3
+
+                await axios.get('http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json')
+                .then((response)=>{
+                    //handler will be called after the script finish its working completely
+                    console.log(response);
+                });
+
+                console.log("create2"); //this line will be called after script finish its working completely 
             },
             mounted(){
+                //called 4
+                let sum = 0;
+                for(let i=0;i<10000000;i++){
+                    sum+=i;
+                }
                 console.log("mounted");
             }
         })

@@ -213,6 +213,25 @@
             console.log("called from main");
         }
 
+        // investigatePromiseOfPromise
+        function investigatePromiseOfPromise(){
+            let a = new Promise((resolve,reject)=>{ //called 1
+                let x = 1; //called 2
+
+                let b = new Promise((resolve2, reject2)=>{ //called 3
+                    let y = 2; //called 3
+                    console.log("called from the sub promise"); //called 4
+                });
+
+                resolve(x); //called 5 .. promise is going to take this line as resolve
+                resolve(x*2); //called 6 .. promise is going to ignore this line
+
+                //this line gets called as resolve doesn't end the execution
+                console.log("called from the main promise"); //called 7
+            });
+            console.log("called from the main function");
+        }
+
 
     </script>
 </body>

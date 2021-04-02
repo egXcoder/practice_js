@@ -23,17 +23,19 @@
             beforeCreate(e) {
                 console.log("beforeCreate1"); //called 1
                 
+                //called 2
                 axios.get('http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json')
                 .then((response)=>{
                     //handler will be called after the script finish its working completely
                     console.log(response);
                 });
                 
-                console.log("beforeCreate2"); //called 2
+                console.log("beforeCreate2"); //called 3
             },
             async created(){
-                console.log("create1"); //called 3
+                console.log("create1"); //called 4
 
+                //called 5
                 await axios.get('http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json')
                 .then((response)=>{
                     //handler will be called after the script finish its working completely
@@ -43,7 +45,7 @@
                 console.log("create2"); //this line will be called after script finish its working completely 
             },
             mounted(){
-                //called 4
+                //called 6
                 let sum = 0;
                 for(let i=0;i<10000000;i++){
                     sum+=i;

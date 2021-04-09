@@ -52,8 +52,15 @@
             console.log(window.screen); //helpful to get meta data about width and heights of the screen
         }
 
+        function encodeAndDecodeURI() {
+            var uri = "my test.asp?name=ståle&car=saab";
+            console.log(encodeURI(uri)); //my%20test.asp?name=st%C3%A5le&car=saab
+            console.log(decodeURI(uri)); //my test.asp?name=ståle&car=saab
+        }
+
         // differenceBetweenCallAndApply();
-        // showHelpfulBrowserObjects();
+        // showHelpfulBrowserObjects(); 
+        // encodeAndDecodeURI();
     </script>
 </body>
 

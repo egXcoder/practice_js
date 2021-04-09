@@ -60,7 +60,7 @@
             var someOtherObject = {
                 myProperty: 'Bar'
             };
-            
+
             someObject.myMethod('<', '>'); // alerts '<Foo>'
             someObject.myMethod.call(someOtherObject, '<', '>'); // alerts '<Bar>'
             someObject.myMethod.apply(someOtherObject, ['<', '>']); // alerts '<Bar>'
@@ -80,11 +80,46 @@
             console.log(decodeURI(uri)); //my test.asp?name=ståle&car=saab
         }
 
-        globalFunction();
-        localFunction();
+        //Currying is an advanced technique to transform a function of arguments n, to n functions of one or less arguments.
+        //For Example, if we have a function f(a,b) , then the function after currying, will be transformed to f(a)(b).
+        //By using the currying technique, we do not change the functionality of a function, we just change the way it is invoked.
+        //The main benefit of currying is when you need to use the same call with some of the same parameters a lot.
+        function showCurryingFunctionality() {
+            let multiply = (a, b) => a * b;
+            let add = (a,b) => a + b;
+            let minus = (a,b)=> a - b;
+            let divide = (a,b)=> a / b;
+
+            function currying(a) {
+                return (b) => {
+                    return (fn) => {
+                        return fn(a, b);
+                    }
+                }
+            }
+
+            //since i am going to do operations on same parameters many times so instead of calling same parameter 
+            //over and over again which is not good for dry concept we use this technique to avoid the following lines 
+            // multiply(4,3);
+            // add(4,3);
+            // minus(4,3);
+            // divide(4,3); 
+
+            let parametersToOperateOn = currying(4)(3);
+            parametersToOperateOn(multiply); //12
+            parametersToOperateOn(add); //7
+            parametersToOperateOn(minus); //1
+            parametersToOperateOn(divide); //1.33
+
+
+        }
+
+        // globalFunction();
+        // localFunction();
         // differenceBetweenCallAndApplyAndBind();
         // showHelpfulBrowserObjects(); 
         // encodeAndDecodeURI();
+        // showCurryingFunctionality();
     </script>
 </body>
 

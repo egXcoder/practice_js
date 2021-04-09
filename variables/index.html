@@ -121,6 +121,22 @@
     console.log(window.foo); // Foo
     console.log(window.bar); // undefined
 
+    function deleteVariables(){
+        //variables can't be deleted
+        let x = 2;
+        delete x; //false
+
+        //property on object can be deleted
+        let o = {
+            name : 'ahmed'
+        };
+        delete o.name; // true
+
+        //array elemen can be deleted as well
+        let a = ['ah','me','d'];
+        delete a[0]; // [empty,'me','d']
+    }
+
 
 
     // showVariableTypes();
@@ -133,6 +149,7 @@
     // modifyConstVariable();
     // setTimoutWithVariables();
     // setTimoutWithVariables2();
+    // deleteVariables();
 </script>
 
 </html>

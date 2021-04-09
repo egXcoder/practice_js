@@ -74,19 +74,36 @@
         person = 123; //Assignment to constant variable.
     }
 
+    // at the time closure is called, it will try to log the i variable which is defined in the function itself
+    // at that time, the variable i will have a value of 3, so closure will run 3 times and each time will print 3
     function setTimoutWithVariables() {
         //3 will present 3 times
         for (var i = 0; i < 3; i++) {
-            setTimeout(() => console.log(i));
+            setTimeout(()=>{
+                console.log(i);
+            });
         }
     }
 
+    //the i variable within closure is different here because i is hoisted within the for block {}
+    //each iteration will have a different value of i
+    //so when closure run, it will call the i variable which will be different because it depends on the iteration itself
     function setTimoutWithVariables2() {
         //0 , 1 , 2
         for (let i = 0; i < 3; i++) {
-            setTimeout(() => console.log(i));
+            setTimeout(()=>{
+                console.log(i);
+            });
         }
     }
+
+    var foo = "Foo";  // globally scoped
+    let bar = "Bar"; // globally scoped
+
+    console.log(window.foo); // Foo
+    console.log(window.bar); // undefined
+
+
 
     // showVariableTypes();
     // differenceBeetweenLetAndVar();

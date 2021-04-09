@@ -1,0 +1,28 @@
+<html>
+
+
+<script>
+    function differenceBetweenCallAndApply() {
+        var someObject = {
+            myProperty: 'Foo',
+
+            myMethod: function (prefix, postfix) {
+
+                alert(prefix + this.myProperty + postfix);
+            }
+        };
+        
+        someObject.myMethod('<', '>'); // alerts '<Foo>'
+        
+        var someOtherObject = {
+            myProperty: 'Bar'
+        };
+
+        someObject.myMethod.call(someOtherObject, '<', '>'); // alerts '<Bar>'
+        someObject.myMethod.apply(someOtherObject, ['<', '>']); // alerts '<Bar>'
+    }
+
+    // differenceBetweenCallAndApply();
+</script>
+
+</html>

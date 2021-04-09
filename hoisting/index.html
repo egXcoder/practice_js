@@ -1,0 +1,126 @@
+<html>
+
+
+<script>
+
+    // hoisting is the process of reserving the variables into memory
+    // javascript will scan code first to make sense of the variables and objects
+    // this making sense process is the hoisting, and its done before execution process
+    // so javascript have two cycles 1.hoisting phase 2.execution phase
+    
+
+    //hositing phase doesn't have any assignment with it,
+    //so let x = 1;
+    //during hoisting phase it will only reserve place for x that is not initalized
+    //if it was var x = 1; //it will intialize it by undefined
+    //the real assignment is done on the execution phase
+    function explainConceptOfHoisting1() {
+        console.log(x); //throw error because variable not intialized
+        let x = 1; //phase1 .. hoisted into foo function, but its not intialized 
+
+        console.log(xx); //undefined
+        var xx = 12; //phase1 .. hoisted into foo function, but by default var will assign variable to undefined
+
+        console.log(xxx); //throw error because variable is not defined
+        xxx = 123; //phase1 .. not hoisted
+    }
+
+    //hoisting phase will reserve variable for the let variable but not initialize it
+    //when execution phase, reaches the line where variable is declared with let, it must assign it, either a value or at least undefined
+    function explainConceptOfHoisting2(){
+        //phase1 .. hoisted into foo function, but its not intialized
+        //execution phase.. will arrive to the line and will set it by undefined
+        let x;  
+        console.log(x); //undefined
+
+        //phase1 .. hoisted into foo function, but its not intialized
+        //execution phase.. will arrive to the line and will set it by value of 123
+        let xx = 123;
+        console.log(xx); //123
+    }
+
+    //Temportal dead zone is time span between variable creation and its initialization where they can’t be accessed.
+    //so all the lines of //do things is temporal dead zone for x
+    //because x is hoisted and created during the hoisting phase
+    //but x is not accessible during the execution phase till it reaches the let x = 1; line
+    function explainTemportalDeadZone(){
+        //do things here
+        //and here
+        //and here
+
+        let x = 1;  
+    }
+
+    //during hoisting, foo function will be hoisted and variable a will be hoisted but not initialized
+    //during execution, a will be assigned to 20
+    //then calling foo() will invoke the function foo which is already hoisted
+    //foo instructions will try to access variable a which is completely valid because a is already hoisted and assigned
+    function explainConceptOfHoisting3() {
+        function foo() {
+            console.log(a);
+        }
+
+        let a = 20;
+        
+        foo();  // This is perfectly valid
+    }
+
+    //during hoisting, foo function will be hoisted and variable a will be hoisted but not initialized
+    //during execution, foo is called which invoke foo instruction which is already hoisted
+    //within foo instruction it will try to call the a variable, but a variable is hoisted but not initialized yet
+    //the foo instructions is inside the temportal dead zone for variable a, so error will be thrown
+    function explainConceptOfHoisting4() {
+        function foo() {
+            console.log(a); // ReferenceError: Cannot access 'a' before initialization
+        }
+
+        foo(); // This is not valid
+        
+        let a = 20;
+    }
+
+    // classes in JavaScript are also hoisted, and just as let or const declarations,
+    //they remain uninitialized until evaluation. So they are also affected by the “Temporal Dead Zone”
+    function explainConceptOfHoisting5() {
+        let peter = new Person('Peter', 25); // ReferenceError: Cannot access 'Person' before initialization
+        console.log(peter);
+        class Person {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+        }
+    }
+
+    //during hoisting, foo function will be hoisted and its value will be its instructions
+    //during execution, calling foo() will invoke the hoisted function
+    function explainConceptOfHoistingToFunctions1() {
+        foo();  // This is perfectly valid
+
+        function foo() {
+            console.log("hello world");
+        }
+    }
+
+    //during hoisting, this is different because foo is hoisted as a variable by let so it is hoisted but not initailized
+    //during execution, calling foo() will try to invoke the variable foo but its not intialized
+    function explainConceptOfHoistingToFunctions2() {
+        foo();  // Cannot access 'foo' before initialization
+
+        let foo = function() {
+            console.log("hello world");
+        }
+    }
+
+
+    // explainConceptOfHoisting1();
+    // explainConceptOfHoisting2();
+    // explainTemportalDeadZone();
+    // explainConceptOfHoisting3();
+    // explainConceptOfHoisting4();
+    // explainConceptOfHoisting5();
+    // explainConceptOfHoistingToFunctions1();
+    // explainConceptOfHoistingToFunctions2();
+</script>
+
+</html>

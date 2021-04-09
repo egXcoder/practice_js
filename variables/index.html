@@ -1,0 +1,101 @@
+<html>
+
+<script>
+    function showVariableTypes() {
+        let x = {
+            hello() {
+
+            }
+        };
+
+        console.log(typeof 123); //number
+        console.log(typeof 900719925124740998n); //bigint
+        console.log(typeof "string"); //string
+        console.log(typeof true); //boolean
+        console.log(typeof x); //object
+        console.log(typeof [1, 2, 3, 4]); //object
+        console.log(typeof x.hello); //function
+        console.log(typeof null); //object
+        console.log(typeof undefined); //undefined
+        console.log(typeof Infinity); //number
+    }
+
+    //let variables are scoped to the immediate enclosing block denoted by { } (hence the block scope).
+    //Variables declared by var keyword are scoped to the immediate function body (hence the function scope)
+    function differenceBeetweenLetAndVar() {
+        let i = 0; //..defined in function scope, its same as var i = 0; since both will make it defined in function scope
+        while (i < 1) {
+            let m = 123; //..can be accessed only inside the while {} so m, can't be accessed outside
+            var mm = 123;//..can be accessed anywhere inside the function
+            i++;
+        }
+
+        console.log(m); //reference error, m is not defined
+        console.log(mm); //123
+    }
+
+    //please notice, const has same scope as let
+    //please notice, syntax error means error on compiling phase
+    // function redeclareVariables(){
+    //     let i = 0;
+    //     let i = 1; // SyntaxError: Identifier 'i' has already been declared
+
+    //     const j = 0;
+    //     const j = 1; // SyntaxError: Identifier 'i' has already been declared
+
+    //     var k = 0;
+    //     var k = 1; //valid
+    // }
+
+    //please notice, TypeError means error on execution phase
+    function reassignVariables() {
+        let i = 0;
+        i = 1; //valid
+
+        const j = 0;
+        j = 1; // TypeError: Assignment to constant variable.
+
+        var k = 0;
+        k = 1; //valid
+    }
+
+    function assignToGlobalScope() {
+        x = 2;
+        console.log(window.x); //2
+    }
+
+    function modifyConstVariable() {
+        const person = {
+            name: 'Ahmed',
+            age: '27'
+        };
+
+        person.name = "Ahmed I"; //valid
+        person = 123; //Assignment to constant variable.
+    }
+
+    function setTimoutWithVariables() {
+        //3 will present 3 times
+        for (var i = 0; i < 3; i++) {
+            setTimeout(() => console.log(i));
+        }
+    }
+
+    function setTimoutWithVariables2() {
+        //0 , 1 , 2
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => console.log(i));
+        }
+    }
+
+    // showVariableTypes();
+    // differenceBeetweenLetAndVar();
+    // redeclareVariables();
+    // reassignVariables();
+    // assignToGlobalScope();
+    // modifyConstVariable();
+    // setTimoutWithVariables();
+    // setTimoutWithVariables2();
+</script>
+
+</html>

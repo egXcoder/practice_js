@@ -26,6 +26,18 @@
         i = "string";
     }
 
+    //Variable typing is used to assign a number to a variable and the same variable can be assigned to a string.
+    function convertingFromStringToNumber(){
+        console.log(parseInt("1qwe23.9123.4123")); //NAN
+        console.log(parseInt("123.9123.4123")); //123
+        console.log(parseInt("123.asq9123.4123")); //123
+        console.log(parseInt("123.asq9123.4aad123")); //123
+
+        console.log(parseFloat("12qw3.agq9123.4aad123")); //NAN
+        console.log(parseFloat("123.9123.4aad123")); //123.9123
+        console.log(parseFloat("123.agq9123.4aad123")); //123
+    }
+
     //let variables are scoped to the immediate enclosing block denoted by { } (hence the block scope).
     //Variables declared by var keyword are scoped to the immediate function body (hence the function scope)
     function differenceBeetweenLetAndVar() {
@@ -112,6 +124,8 @@
 
 
     // showVariableTypes();
+    // variableTyping();
+    // convertingFromStringToNumber();
     // differenceBeetweenLetAndVar();
     // redeclareVariables();
     // reassignVariables();

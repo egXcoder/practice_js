@@ -1,28 +1,55 @@
 <html>
 
+<head>
+    <!-- 
+        Scripts with defer never block the page.
+        Scripts with defer always execute when the DOM is ready (but before DOMContentLoaded event). 
+        Deferred scripts keep their relative order, So even though small.js loads first, it still waits and runs after long.js executes.
 
-<script>
-    function differenceBetweenCallAndApply() {
-        var someObject = {
-            myProperty: 'Foo',
+        <script defer src="https://javascript.info/article/script-async-defer/long.js"></script>
+        <script defer src="https://javascript.info/article/script-async-defer/small.js"></script>
+    -->
 
-            myMethod: function (prefix, postfix) {
+    <!-- 
+        The async attribute is somewhat like defer
+        The async attribute means that a script is completely independent:
+        Scripts with async never block the page.
+        DOMContentLoaded and async scripts don’t wait for each other.
+        small script will run first before long because small.js will download first
 
-                alert(prefix + this.myProperty + postfix);
-            }
-        };
-        
-        someObject.myMethod('<', '>'); // alerts '<Foo>'
-        
-        var someOtherObject = {
-            myProperty: 'Bar'
-        };
+        <script async src="https://javascript.info/article/script-async-defer/long.js"></script>
+        <script async src="https://javascript.info/article/script-async-defer/small.js"></script>
+    -->
+</head>
 
-        someObject.myMethod.call(someOtherObject, '<', '>'); // alerts '<Bar>'
-        someObject.myMethod.apply(someOtherObject, ['<', '>']); // alerts '<Bar>'
-    }
+<body>
+    <script>
+        //defer and async keywords
 
-    // differenceBetweenCallAndApply();
-</script>
+
+        function differenceBetweenCallAndApply() {
+            var someObject = {
+                myProperty: 'Foo',
+
+                myMethod: function (prefix, postfix) {
+
+                    alert(prefix + this.myProperty + postfix);
+                }
+            };
+
+            someObject.myMethod('<', '>'); // alerts '<Foo>'
+
+            var someOtherObject = {
+                myProperty: 'Bar'
+            };
+
+            someObject.myMethod.call(someOtherObject, '<', '>'); // alerts '<Bar>'
+            someObject.myMethod.apply(someOtherObject, ['<', '>']); // alerts '<Bar>'
+        }
+
+            // differenceBetweenCallAndApply();
+    </script>
+</body>
+
 
 </html>

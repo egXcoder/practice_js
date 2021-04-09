@@ -112,14 +112,7 @@
         }
     }
 
-    //this function is hoisted into the window object and it will be global function
-    //so later you can call it via window.doSomething() and it will work
-    function doSomething(){
-        console.log(this); //"this" will point to the window object, since its the object context at which this function run
-        //“this” keyword refers to the object that the function is a property of.
-    }
-
-
+    
     // explainConceptOfHoisting1();
     // explainConceptOfHoisting2();
     // explainTemportalDeadZone();
@@ -128,6 +121,7 @@
     // explainConceptOfHoisting5();
     // explainConceptOfHoistingToFunctions1();
     // explainConceptOfHoistingToFunctions2();
+    localFunction();
 </script>
 
 </html>

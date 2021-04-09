@@ -24,6 +24,26 @@
 
 <body>
     <script>
+        //this function is assigned into the window object and it will be global function
+        //so later you can call it via window.globalFunction() and it will work
+        function globalFunction() {
+            //“this” keyword refers to the object that the function is a property of.
+            console.log(this);
+        }
+
+        //obj object will be hoisted with property of name and a function of getName()
+        function localFunction() {
+            var obj = {
+                name: "vivek",
+                getName: function () {
+                    //“this” keyword refers to the object that the function is a property of, which is obj
+                    console.log(this.name);
+                }
+            }
+
+            obj.getName();
+        }
+
         //call and apply are used to alter the context of calling a method to a different context
         //so the below code, someObject.myMethod is called with the arguments but "this" context
         // is altered from using someObject, it will use someOtherObject instead
@@ -57,7 +77,9 @@
             console.log(encodeURI(uri)); //my%20test.asp?name=st%C3%A5le&car=saab
             console.log(decodeURI(uri)); //my test.asp?name=ståle&car=saab
         }
-
+        
+        globalFunction();
+        localFunction();
         // differenceBetweenCallAndApply();
         // showHelpfulBrowserObjects(); 
         // encodeAndDecodeURI();

@@ -24,9 +24,9 @@
 
 <body>
     <script>
-        //defer and async keywords
-
-
+        //call and apply are used to alter the context of calling a method to a different context
+        //so the below code, someObject.myMethod is called with the arguments but "this" context
+        // is altered from using someObject, it will use someOtherObject instead
         function differenceBetweenCallAndApply() {
             var someObject = {
                 myProperty: 'Foo',

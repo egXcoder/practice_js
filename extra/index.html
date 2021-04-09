@@ -193,6 +193,30 @@
             }
         }
 
+        function generatorsAndIterables(){
+            //generators are used to avoid loading alot of information into memory
+            //its the default behavior for the computer to load information inside memory 
+            //as a prepatory step before consuming data via the cpu as it takes less time this way
+            //but if the data to be loaded into memory must be avoided not to cause problems
+            //generators are used, so cpu will iterate one by one without having to load all the record
+            //this in general is effective way on loading files from memory or very big data which is in memory already
+            //so instead of reload them into memory we consume it on the fly
+            function* iteratorFunc() {
+                for (let i = 0; i < 2; i++) {
+                    yield i;
+                }
+            }
+
+            let iterable = iteratorFunc();
+
+            //built in iterables .. string,array,typedArray,Map,Set,generators of course
+            //iteratbles can be looped over using for .. of
+            //objects are not iterable
+            for(let el of iterable){
+                console.log(el);
+            }
+        }
+
         // globalFunction();
         // localFunction();
         // differenceBetweenCallAndApplyAndBind();
@@ -203,6 +227,7 @@
         // createObjectFromFunction();
         // explainRestParameterAndSpreadOperator();
         // explainClassSyntax();
+        // generatorsAndIterables();
     </script>
 </body>
 

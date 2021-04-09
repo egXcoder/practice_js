@@ -110,8 +110,21 @@
             parametersToOperateOn(add); //7
             parametersToOperateOn(minus); //1
             parametersToOperateOn(divide); //1.33
+        }
 
+        //every object has prototype which it describe the blueprint of object instanitation
+        //so all array objects will inherit from Array.prototype
+        //so if you added a method to the Array Prototype, it will be available for all the arrays objects (instances)
+        function explainRegisteringMethodsInPrototype(){
+            Array.prototype.sumAllElements = function(){
+                let sum = 0;
+                for(let i=0;i<this.length;i++){
+                    sum+=this[i];
+                }
+                return sum;
+            }
 
+            [1, 2, 3].sumAllElements();
         }
 
         // globalFunction();

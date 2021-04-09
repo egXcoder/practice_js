@@ -86,9 +86,9 @@
         //The main benefit of currying is when you need to use the same call with some of the same parameters a lot.
         function showCurryingFunctionality() {
             let multiply = (a, b) => a * b;
-            let add = (a,b) => a + b;
-            let minus = (a,b)=> a - b;
-            let divide = (a,b)=> a / b;
+            let add = (a, b) => a + b;
+            let minus = (a, b) => a - b;
+            let divide = (a, b) => a / b;
 
             function currying(a) {
                 return (b) => {
@@ -115,16 +115,29 @@
         //every object has prototype which it describe the blueprint of object instanitation
         //so all array objects will inherit from Array.prototype
         //so if you added a method to the Array Prototype, it will be available for all the arrays objects (instances)
-        function explainRegisteringMethodsInPrototype(){
-            Array.prototype.sumAllElements = function(){
+        function explainRegisteringMethodsInPrototype() {
+            Array.prototype.sumAllElements = function () {
                 let sum = 0;
-                for(let i=0;i<this.length;i++){
-                    sum+=this[i];
+                for (let i = 0; i < this.length; i++) {
+                    sum += this[i];
                 }
                 return sum;
             }
 
             [1, 2, 3].sumAllElements();
+        }
+
+        function createObjectFromFunction() {
+            //this function is considered the constructor of object when we use the "new" keyword on it 
+            function Person(name, age, gender) {
+                this.name = name;
+                this.age = age;
+                this.gender = gender;
+            }
+
+
+            var person1 = new Person("Vivek", 76, "male");
+            console.log(person1); // {name:"Vivek",age:76,gender:"male"}
         }
 
         // globalFunction();
@@ -133,7 +146,8 @@
         // showHelpfulBrowserObjects(); 
         // encodeAndDecodeURI();
         // showCurryingFunctionality();
-        explainRegisteringMethodsInPrototype();
+        // explainRegisteringMethodsInPrototype();
+        // createObjectFromFunction();
     </script>
 </body>
 

@@ -44,27 +44,29 @@
             obj.getName();
         }
 
-        //call and apply are used to alter the context of calling a method to a different context
+        //call and apply and bind are used to alter the context of calling a method to a different context
         //so the below code, someObject.myMethod is called with the arguments but "this" context
         // is altered from using someObject, it will use someOtherObject instead
-        function differenceBetweenCallAndApply() {
+        //call and apply, do invoke the method
+        //bind is just returning a new function with the altered context
+        function differenceBetweenCallAndApplyAndBind() {
             var someObject = {
                 myProperty: 'Foo',
-
                 myMethod: function (prefix, postfix) {
-
                     alert(prefix + this.myProperty + postfix);
                 }
             };
 
-            someObject.myMethod('<', '>'); // alerts '<Foo>'
-
             var someOtherObject = {
                 myProperty: 'Bar'
             };
-
+            
+            someObject.myMethod('<', '>'); // alerts '<Foo>'
             someObject.myMethod.call(someOtherObject, '<', '>'); // alerts '<Bar>'
             someObject.myMethod.apply(someOtherObject, ['<', '>']); // alerts '<Bar>'
+
+            let newFunc = someObject.myMethod.bind(someOtherObject, '<', '>');
+            newFunc(); // alerts '<Bar>'
         }
 
         function showHelpfulBrowserObjects() {
@@ -77,10 +79,10 @@
             console.log(encodeURI(uri)); //my%20test.asp?name=st%C3%A5le&car=saab
             console.log(decodeURI(uri)); //my test.asp?name=ståle&car=saab
         }
-        
+
         globalFunction();
         localFunction();
-        // differenceBetweenCallAndApply();
+        // differenceBetweenCallAndApplyAndBind();
         // showHelpfulBrowserObjects(); 
         // encodeAndDecodeURI();
     </script>

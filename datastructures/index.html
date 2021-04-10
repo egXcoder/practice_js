@@ -54,6 +54,21 @@
         set = new Set('firefox'); // set = ['f','i','r','e','o','x']
     }
 
+    function operateOnMaps() {
+        let map = new Map();
+        map.set("key1", "value1");
+        map.set(123, "value2");
+        map.set("key1", {}); //override the key
+        map.has(123); //true
+        map.get("key1"); //{}
+        map.size; //2 O(1) operation but using objects as map it will be O(n)
+        map.delete(123);
+        for (let [key, value] of map) {/*do some code */ } //map is iterable so we can use for .. of 
+
+        map['bla'] = 'blaa'; //this is wrong way to add elements to map
+        map.has('bla'); //false
+    }
+
     function operateOnWeakSets() {
         /** The WeakSet object lets you store weakly held objects in a collection.
          *  WeakSets are collections of objects only

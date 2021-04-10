@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
 
     <p>Hello world vuejs </p>
     <div id="app">
+        <p>{{d_key}}</p>
+        <button ref="button" @click="buttonIsClicked">Manipule dom</button>
+        <button ref="button" @click="destroyInstance">Destroy</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
@@ -19,40 +24,54 @@
 
     <script>
         new Vue({
-            el : '#app',
-            beforeCreate(e) {
-                console.log("beforeCreate1"); //called 1
-                
-                //called 2
-                axios.get('http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json')
-                .then((response)=>{
-                    //handler will be called after the script finish its working completely
-                    console.log(response);
-                });
-                
-                console.log("beforeCreate2"); //called 3
+            el: '#app',
+            data: {
+                d_key: 'value',
             },
-            async created(){
-                console.log("create1"); //called 4
-
-                //called 5
-                await axios.get('http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json')
-                .then((response)=>{
-                    //handler will be called after the script finish its working completely
-                    console.log(response);
-                });
-
-                console.log("create2"); //this line will be called after script finish its working completely 
-            },
-            mounted(){
-                //called 6
-                let sum = 0;
-                for(let i=0;i<10000000;i++){
-                    sum+=i;
+            methods: {
+                buttonIsClicked() {
+                    this.d_key += "!";
+                },
+                destroyInstance() {
+                    this.$destroy();
                 }
-                console.log("mounted");
-            }
+            },
+            beforeCreate(e) {
+                //you can't interact with this.$data or methods
+                console.log(this.d_key); //undefined
+                console.log(this.buttonIsClicked);//error
+            },
+            created() {
+                //you can access data and events
+                console.log(this.d_key1); // "value"
+                console.log(this.buttonIsClicked); // function exist
+            },
+            beforeMount() {
+                //dom template of el is compiled and real dom is loaded into $el
+                console.log(this.$el); //can access dom element
+            },
+            mounted() {
+                //vuejs has built its vdom from the real dom to easify updating dom later on
+                //watchers are initalized, please notice dom and logic are associated together with watchers as well
+                //at this point,vuejs has initailized all of its features and you can interace with dom and watchers
+                console.log(this._vnode, this.watchers);
+            },
+            beforeUpdate() {
+                //data is changed but it didn't affect dom yet
+            },
+            updated() {
+                //data is changed and it affected dom
+            },
+            beforeDestroy() {
+                //vue instance is alive and reflect dom ,data, watchers are all alive
+            },
+            destroyed() {
+                //watchers,data,vdom are destroyed
+                //component is not attached with its parent anymore
+                //vue instance doesn't reflect the dom anymore
+            },
         })
     </script>
 </body>
+
 </html>

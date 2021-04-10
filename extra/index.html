@@ -217,6 +217,26 @@
             }
         }
 
+        function showObjectAndArrayDestruction(){
+            /** Object Destructure */
+            const classDetails = {
+                strength: 78,
+                benches: 39,
+                blackBoard: 1
+            }
+
+            const { strength: classStrength, benches: classBenches } = classDetails;
+            console.log(classStrength); // Outputs 78
+            console.log(classBenches); // Outputs 39
+
+            const { strength: strength } = classDetails;
+            const { strength } = classDetails; // equivalent to the above code
+
+            /** array Destructure */
+            const arr = [1, 2, 3, 4];
+            const [first, second, third, fourth] = arr;
+        }
+
         // globalFunction();
         // localFunction();
         // differenceBetweenCallAndApplyAndBind();
@@ -228,6 +248,7 @@
         // explainRestParameterAndSpreadOperator();
         // explainClassSyntax();
         // generatorsAndIterables();
+        // showObjectAndArrayDestruction();
     </script>
 </body>
 

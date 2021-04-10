@@ -1,0 +1,46 @@
+<html>
+
+<script>
+    function operateOnArrays() {
+        let array = [1, 2, 3, 4];
+        /** working array as dequeue **/
+        array.push(5); //add to the end of array
+        array.pop(); //remove from the end of array
+        array.unshift(0); //add to the beginning of array
+        array.shift(); //remove from the begining of array
+
+        /** slicing from array **/
+        array = [1, 2, 3, 4];
+        let slicedArray = array.slice(startIndexIncluding = 0, endIndexExcluding = 2); //x=[1,2,3,4] slicedArray=[1,2];
+        let splicedArray = array.splice(startIndexIncluding = 0, endIndexExcluding = 2); //x=[3,4] splicedArray=[1,2];
+
+        /** searching Array **/
+        array = [1, 2, 3, 4];
+        array.find((el) => el / 2 == 1);//2
+        array.findIndex((el) => el / 2 == 1);//1
+        array.includes(2); //true
+
+        /** looping through elements **/
+        array = [1, 2, 3, 4];
+        array.every((el) => el < 5); //true (is all elements below 5?)
+        array.some((el) => el < 2); //true (is some element below 2 ?)
+        array.forEach((el) => {/*do some code*/ });//iterating on elements
+        let mappedArray = array.map((el) => el * 2); //x=[1,2,3,4] mappedArray=[2,4,6,8]
+        let filteredArray = array.filter((el) => el < 3); //x=[1,2,3,4] filteredArray=[1,2]
+        for(let el of array){/* do some operation */} //array is iterable so we can can for .. of
+
+        /** extra operations **/
+        array = [1, 2, [11, 22, 33], 4];
+        array.flat(); //[1,2,11,22,33,4]
+
+        /** In Place Operations **/
+        array = [213, 312, 451, 1, 23, 3, 5];
+        array.reverse(); //array will be = [5, 3, 23, 1, 451, 312, 213]
+        array.sort((a, b) => a - b); //array will be [1, 3, 5, 23, 213, 312, 451]
+        //array.sort is consuming comparing function which return +1=>when a bigger than b , -1=>when a less than b , 0 when a==b
+    }
+
+    operateOnArrays();
+</script>
+
+</html>

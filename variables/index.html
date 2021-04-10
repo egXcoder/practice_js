@@ -18,17 +18,17 @@
         console.log(typeof x.hello); //function
         console.log(typeof null); //object
         console.log(typeof undefined); //undefined
-        console.log(typeof void(0)); //undefined ...void('whatever') always return undefined.
+        console.log(typeof void (0)); //undefined ...void('whatever') always return undefined.
     }
 
     //Variable typing is used to assign a number to a variable and the same variable can be assigned to a string.
-    function variableTyping(){
+    function variableTyping() {
         let i = 10;
         i = "string";
     }
 
     //Variable typing is used to assign a number to a variable and the same variable can be assigned to a string.
-    function convertingFromStringToNumber(){
+    function convertingFromStringToNumber() {
         console.log(parseInt("1qwe23.9123.4123")); //NAN
         console.log(parseInt("123.9123.4123")); //123
         console.log(parseInt("123.asq9123.4123")); //123
@@ -98,7 +98,7 @@
     function setTimoutWithVariables() {
         //3 will present 3 times
         for (var i = 0; i < 3; i++) {
-            setTimeout(()=>{
+            setTimeout(() => {
                 console.log(i);
             });
         }
@@ -110,35 +110,57 @@
     function setTimoutWithVariables2() {
         //0 , 1 , 2
         for (let i = 0; i < 3; i++) {
-            setTimeout(()=>{
+            setTimeout(() => {
                 console.log(i);
             });
         }
     }
 
-    var foo = "Foo";  // globally scoped
-    let bar = "Bar"; // globally scoped
 
-    console.log(window.foo); // Foo
-    console.log(window.bar); // undefined
-
-    function deleteVariables(){
+    function deleteVariables() {
         //variables can't be deleted
         let x = 2;
         delete x; //false
 
         //property on object can be deleted
         let o = {
-            name : 'ahmed'
+            name: 'ahmed'
         };
         delete o.name; // true
 
         //array elemen can be deleted as well
-        let a = ['ah','me','d'];
+        let a = ['ah', 'me', 'd'];
         delete a[0]; // [empty,'me','d']
     }
 
+    function gettersAndSetters() {
+        var person = {
+            firstName: "John",
+            lastName: "Doe",
+            language: "en",
+            langFunc() {
+                return "this is a function";
+            },
+            get lang() {
+                return this.language;
+            },
+            set lang(value) {
+                this.language = value;
+            }
+        };
 
+        console.log(person.langFunc()); // "this is a function"
+        console.log(person.lang); // "en"
+        person.lang = "ar";
+        console.log(person.lang);//"ar"
+    }
+
+
+    var foo = "Foo";  // globally scoped
+    let bar = "Bar"; // globally scoped
+
+    console.log(window.foo); // Foo
+    console.log(window.bar); // undefined
 
     // showVariableTypes();
     // variableTyping();
@@ -151,6 +173,7 @@
     // setTimoutWithVariables();
     // setTimoutWithVariables2();
     // deleteVariables();
+    // gettersAndSetters();
 </script>
 
 </html>

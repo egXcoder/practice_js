@@ -22,6 +22,9 @@
         <button style="display: block;" @click="newVar = 'hello'" >new variables is not watched</button>
         <button style="display: block;" @click="obj.newVar += 'hello'" >new variables to nested object is not watched</button>
         <button style="display: block;" @click="$set(obj,'newVar','hello')" >new variables to nested object is watched</button>
+        <hr>
+        <button style="display: block;" @click="changeArrayMutatationDetected()">Change Array Mutation is detected</button>
+        <button style="display: block;" @click="changeArrayMutatationNotDetected()">Change Array Mutation is Not detected</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
@@ -60,6 +63,35 @@
                     deep:true
                 }
 
+            },
+            methods: {
+                changeArrayMutatationDetected(){
+                    //all of these methods invoke the watcher
+                    //as all of these methods operate in place
+                    this.array.push(6);
+                    this.array.pop();
+                    this.array.unshift(6);
+                    this.array.shift(7);
+                    this.array.splice(0,1);
+                    this.array.sort((a,b)=>a-b);
+                    this.array.reverse();
+
+                    //instruct vuejs to invoke watcher
+                    this.$set(this.array, 2, 22);
+
+                    //watcher is run only once even if there are many mutations happened 
+                    //watcher is run at the end of script after all mutations takes place
+                },
+                changeArrayMutatationNotDetected(){
+                    //all of these operations don't invoke the watcher
+                    //as all of these methods don't affect the original array
+                    this.array.slice(0,2);
+                    this.array.filter((el)=>el<2);
+                    this.array.map((el)=>el*2);
+
+                    //change index directly don't affect watcher
+                    this.array[2] = 22;
+                },
             },
         });
     </script>

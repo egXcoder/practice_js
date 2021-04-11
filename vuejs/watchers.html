@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>Due to limitations in JavaScript, there are types of changes that Vue cannot detect</p>
+        <a href="https://vuejs.org/v2/guide/reactivity.html">Click here to say the watcher limitations</a>
+        
+        <hr>
+
+        <p v-html="notification"></p>
+        <button style="display: block;" @click="firstName += 'Bar'">Change First Name</button>
+        <button style="display: block;" @click="array.push(4)">Change Array</button>
+        <button style="display: block;" @click="array2.pop()">Change Array2</button>
+        <button style="display: block;" @click="newVar = 'hello'" >new variables is not watched</button>
+        <button style="display: block;" @click="obj.newVar += 'hello'" >new variables to nested object is not watched</button>
+        <button style="display: block;" @click="$set(obj,'newVar','hello')" >new variables to nested object is watched</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                firstName: 'Foo',
+                array: [1, 2, 3],
+                array2: [4, 5, 6],
+                obj:{
+                    key1:'value1',
+                },
+                notification: '',
+            },
+            watch: {
+                firstName: function (newValue, oldValue) {
+                    this.notification += "firstName watcher is called <br>";
+                },
+                array: {
+                    handler: function (newValue, oldValue) {
+                        this.notification += "array watcher is called <br>";
+                    },
+                    deep: true, //this indicate to watch all array elements and object properties
+                },
+                array2: {
+                    handler: function (newValue, oldValue) {
+                        this.notification += "array2 watcher is called <br>";
+                    },
+                    immediate: true, // the callback will be called immediately after the start of the observation
+                },
+                obj:{
+                    handler:function(newValue,oldValue){
+                        this.notification += "object watcher is called <br>";
+                    },
+                    deep:true
+                }
+
+            },
+        });
+    </script>
+</body>
+
+</html>

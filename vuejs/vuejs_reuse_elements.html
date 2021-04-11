@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <p>Hello world vuejs </p>
+    <div id="app">
+        <p>Vuejs reuse elements by default</p>
+        <template v-if="loginType === 'Admin'">
+            <label>Admin</label>
+            <input placeholder="Enter your ID">
+        </template>
+        <template v-else>
+            <label>Guest</label>
+            <input placeholder="Enter your name">
+        </template>
+        <button @click="loginType = (loginType=='Admin') ? 'User' : 'Admin'">change Login Type</button>
+        <hr>
+        <p>To force vuejs not to reuse element</p>
+        <template v-if="loginType2 === 'Admin'">
+            <label>Admin</label>
+            <input placeholder="Enter your ID" key="admin-id">
+        </template>
+        <template v-else>
+            <label>Guest</label>
+            <input placeholder="Enter your name" key="user-name">
+        </template>
+        <button @click="loginType2 = (loginType2=='Admin') ? 'User' : 'Admin'">change Login Type</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+    <script>
+        //the object which is injected into the vue instance
+        //is loaded into instance.$options
+        new Vue({
+            el: '#app',
+            data: {
+               loginType: 'Admin',
+               loginType2: 'Admin',
+            },
+        })
+    </script>
+</body>
+
+</html>

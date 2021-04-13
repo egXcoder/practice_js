@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <p>Hello world vuejs </p>
+    <div id="app">
+        <custom-input message='hi world'></custom-input> <!-- valid prop -->
+        <custom-input message='asd'></custom-input> <!-- fail message prop validation -->
+        <custom-input></custom-input> <!-- fail message prop being required and default is called -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+    <script>
+        //the object which is injected into the vue instance
+        //is loaded into instance.$options
+        var customInput = {
+            props: {
+                //the following object is helpful when prop is provided to validate it before being consumed
+                message : {
+                    type: String, //available types are Number , String , Boolean , Array , Object
+                    // type:[Number,String] //this is also valid to say prop can be Number or String
+                    required:true, //this will throw a warning if props is not provided
+                    default : function(){ //if prop is not provided,default is initiatialed
+                        return 'hello world';
+                    },
+                    validator:function(message){ //validator is executed when prop is provided
+                       return message.includes('hi');
+                    }
+                }
+            },
+            template: `
+                <input
+                :value="message"
+                @input="$emit('input', $event.target.value)"
+                />
+            `
+        };
+
+        new Vue({
+            el: '#app',
+            components:{
+                customInput : customInput
+            },
+            data: {
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -15,6 +15,20 @@
         <custom-input message='hi world'></custom-input> <!-- valid prop -->
         <custom-input message='asd'></custom-input> <!-- fail message prop validation -->
         <custom-input></custom-input> <!-- fail message prop being required and default is called -->
+
+        <hr>
+
+        <!-- 
+            since we arn't receieving foo prop in the component,vuejs will automatically set foo="bar" in the root element 
+            of the custom-input component, by replacing it 
+         -->
+         <custom-input foo="bar"></custom-input>
+         
+         <!-- 
+             class and style are the only props that will be merged with the root element instead of replacing it 
+             completely 
+          -->
+        <custom-input class="foobar" style="background:transparent;"></custom-input>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
@@ -39,6 +53,9 @@
             },
             template: `
                 <input
+                class="input-class"
+                style="color:red"
+                foo="1"
                 :value="message"
                 @input="$emit('input', $event.target.value)"
                 />

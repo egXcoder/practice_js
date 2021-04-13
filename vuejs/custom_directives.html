@@ -45,6 +45,10 @@
                     update(el, binding) {
                         //when element is updated and re-rendered
                         console.log("updated hook");
+                    },
+                    unbind(el,binding){
+                        // called only once, when the directive is unbound from the element.
+                        console.log("unbind hook");
                     }
                 }
             },

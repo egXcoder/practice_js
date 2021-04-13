@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <p>Hello world vuejs </p>
+    <div id="app">
+        <input type="text" v-focus v-default-to-number:foobar.xx1.xx2="{default:123}">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+    <script>
+        Vue.directive('focus', {
+            // When the bound element is inserted into the DOM...
+            inserted: function (el) {
+                // Focus the element
+                el.focus()
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            directives: {
+                defaultToNumber: {
+                    bind(el, binding) {
+                        // when the directive is first bound to the element.This is where you can do one - time setup work.
+                        console.log("binding hook the most used one");
+                        console.log(binding.arg); //foobar
+                        console.log(binding.modifiers); //{xx1:true,xx2:true}
+                        console.log(binding.value); //{default:123}
+                    },
+                    inserted(el, binding) {
+                        // called when the bound element has been inserted into its parent node
+                        console.log("inserted hook");
+                        el.value = binding.value.default;
+                    },
+                    update(el, binding) {
+                        //when element is updated and re-rendered
+                        console.log("updated hook");
+                    }
+                }
+            },
+            data: {
+            },
+        })
+    </script>
+</body>
+
+</html>
